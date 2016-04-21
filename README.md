@@ -1,4 +1,3 @@
-![image](/images/hypercube.png =100x) 
 #WaspDb 
 WaspDB is a pure Java key/value (NoSQL) database library for Android. It supports AES256 encryption for all the disk storage. It's very small (the aar file is ~189 KB).
 
@@ -104,6 +103,6 @@ I've used this project [https://github.com/Raizlabs/AndroidDatabaseLibraryCompar
 
 This is the "simple trial" (storing 50 objects) on a Nexus 5, using WaspDb's encryption feature:
 
-![image](/images/wasp_comparison.png =800x)
+![image](/images/wasp_comparison.png)
 
 It's even faster if you don't need encryption.
