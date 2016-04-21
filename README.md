@@ -8,11 +8,27 @@ Data is stored by an implementation of hashmaps on disk.
 
 ###QuickStart
 
-To use it with gradle
+To use it with gradle (using jitpack.io):
+
+Add it in your root build.gradle at the end of repositories:
+
+
+
+	allprojects {
+		repositories {
+			...
+			maven { url "https://jitpack.io" }
+		}
+	}
+	
+Add the dependency
 
 	dependencies {
-    	compile 'REPLACEME'
+			...
+    	    compile 'com.github.rehacktive:waspdb:1.0'
 	}
+
+Ok, let's start.
 	
 Let's assume a POJO (even with nested object, like Address):
 
