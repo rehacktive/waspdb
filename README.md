@@ -14,87 +14,91 @@ To use it with gradle (using jitpack.io):
 
 Add it in your root build.gradle at the end of repositories:
 
-
-
-	allprojects {
-		repositories {
-			...
-			maven { url "https://jitpack.io" }
-		}
+```groovy
+allprojects {
+	repositories {
+		...
+		maven { url "https://jitpack.io" }
 	}
-	
+}
+```
 Add the dependency
 
-	dependencies {
-			...
-    	    compile 'com.github.rehacktive:waspdb:1.0'
-	}
+```groovy
+dependencies {
+	...
+	compile 'com.github.rehacktive:waspdb:1.0'
+}
+```
 
 Ok, let's start.
 	
 Let's assume a POJO (even with nested object, like Address):
-
-	class User {
-		private String username;
-		private String email;
-		private String telephone;
-		private Address address;
-		
-		public User() {
-		}
-		
-		// getters and setters...
+```java
+class User {
+	private String username;
+	private String email;
+	private String telephone;
+	private Address address;
+	
+	public User() {
 	}
+	
+	// getters and setters...
+}
+```
 
 No need to be Serializable or Parcelable or annotations or extending/implementing from other classes/interfaces, the only important thing is to have an **empty constructor**.
 	
 **Create a database, a WaspHash and store a POJO**
-
-    // create a database, using the default files dir as path, database name and a password
-    String path = getFilesDir().getPath();
-    String databaseName = "myDb";
-    String password = "passw0rd";
+```java
+// create a database, using the default files dir as path, database name and a password
+String path = getFilesDir().getPath();
+String databaseName = "myDb";
+String password = "passw0rd";
     
-	WaspDb db = WaspFactory.openOrCreateDatabase(path,databaseName,password);
+WaspDb db = WaspFactory.openOrCreateDatabase(path,databaseName,password);
 	
-	// now create an WaspHash, it's like a sql table
-	WaspHash users = db.openOrCreateHash("users");
-	
-	// now let's have a POJO
-	User p = new User();
-	... // do your stuff with your POJO!
-	
-	// and simply store it!
-	users.put(p.getUsername(), p);
-	
+// now create an WaspHash, it's like a sql table
+WaspHash users = db.openOrCreateHash("users");
+
+// now let's have a POJO
+User p = new User();
+... // do your stuff with your POJO!
+
+// and simply store it!
+users.put(p.getUsername(), p);
+```
 
 **To retrieve it**, it's just
+```java
+User p = users.get("username1");
+```
 
-	User p = users.get("username1");
-	
 **Need all your objects?**
+```java
+List<User> allUsers = users.getAllValues();
+```
 
-	List<User> allUsers = users.getAllValues();
-	
 It returns all the users, in a standard java List.
 
 Or you can **get all the keys** used
-
-	List<String> keys = users.getAllKeys();
-
+```java
+List<String> keys = users.getAllKeys();
+```
 or the actual **key/value map** (it's again a standard java class)
-
-	HashMap<String, User> usersMap = users.getAllData();
-
+```java
+HashMap<String, User> usersMap = users.getAllData();
+```
 Please note that the process of creating an encrypted database is computationally expensive (10000 iterations to create the AES256 key), so also an async method is available:
-	
-	WaspFactory.openOrCreateDatabase(path, databaseName, password, new WaspListener<WaspDb>() {
-                @Override
-                public void onDone(WaspDb waspDb) {
-                    ....
-                }
-            });
-
+```java	
+WaspFactory.openOrCreateDatabase(path, databaseName, password, new WaspListener<WaspDb>() {
+        @Override
+        public void onDone(WaspDb waspDb) {
+            ....
+        }
+    });
+```
 	
 ###Why WaspDb
 I **hate** to store objects on sqlite! It's a lot of boiler code...for what?
