@@ -3,7 +3,7 @@
 #WaspDb 
 WaspDB is a pure Java key/value (NoSQL) database library for Android. It supports AES256 encryption for all the disk storage. It's very small (the aar file is ~189 KB).
 
-Keys and Values are simple Java Objects. Everything is automatically serialized using the [Kryo]() serialization library.
+Keys and Values are simple Java Objects. Everything is automatically serialized using the [Kryo](https://github.com/EsotericSoftware/kryo/) serialization library.
 
 Data is stored by an implementation of hashmaps on disk.
 
