@@ -1,3 +1,5 @@
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-WaspDb-green.svg?style=true)](https://android-arsenal.com/details/1/3482)
+
 #WaspDb 
 WaspDB is a pure Java key/value (NoSQL) database library for Android. It supports AES256 encryption for all the disk storage. It's very small (the aar file is ~189 KB).
 
