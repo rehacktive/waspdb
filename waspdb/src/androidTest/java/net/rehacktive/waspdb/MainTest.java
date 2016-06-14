@@ -13,7 +13,7 @@ import java.util.List;
 public class MainTest extends InstrumentationTestCase {
 
     String path;
-    String dbName = "justAtestDb";
+    String dbName = "justAtestDb2";
     String dbPwd = "passw0rd!";
 
     Context ctx;

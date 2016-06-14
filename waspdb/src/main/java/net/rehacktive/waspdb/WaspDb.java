@@ -1,6 +1,6 @@
 package net.rehacktive.waspdb;
 
-import net.rehacktive.waspdb.internals.cryptolayer.CipherManager;
+import net.rehacktive.waspdb.internals.collision.CipherManager;
 import net.rehacktive.waspdb.internals.utils.Utils;
 
 import java.io.File;

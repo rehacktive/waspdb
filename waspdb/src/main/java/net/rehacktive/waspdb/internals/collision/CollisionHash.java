@@ -4,7 +4,6 @@ import android.util.Log;
 
 import net.rehacktive.waspdb.internals.collision.exceptions.KeyAlreadyExistsException;
 import net.rehacktive.waspdb.internals.collision.exceptions.KeyNotFoundException;
-import net.rehacktive.waspdb.internals.cryptolayer.CipherManager;
 import net.rehacktive.waspdb.internals.utils.Utils;
 
 import org.apache.commons.io.FileUtils;

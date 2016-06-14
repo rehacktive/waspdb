@@ -3,7 +3,7 @@ package net.rehacktive.waspdb;
 import android.os.AsyncTask;
 
 import net.rehacktive.waspdb.internals.collision.KryoStoreUtils;
-import net.rehacktive.waspdb.internals.cryptolayer.CipherManager;
+import net.rehacktive.waspdb.internals.collision.CipherManager;
 import net.rehacktive.waspdb.internals.utils.Salt;
 import net.rehacktive.waspdb.internals.utils.Utils;
 

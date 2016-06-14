@@ -4,12 +4,13 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
-import net.rehacktive.waspdb.internals.cryptolayer.AESSerializer;
-import net.rehacktive.waspdb.internals.cryptolayer.CipherManager;
+import net.rehacktive.waspdb.internals.collision.exceptions.WaspDataPage;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+
+import javax.crypto.Cipher;
 
 
 public class KryoStoreUtils {
@@ -18,9 +19,10 @@ public class KryoStoreUtils {
 	private static Kryo kryoInstance;
 
 	private static Kryo getKryoInstance() {
-		if(kryoInstance==null)
+		if(kryoInstance==null) {
 			kryoInstance = new Kryo();
-
+			kryoInstance.register(WaspDataPage.class);
+		}
 		return kryoInstance;
 	}
 
@@ -32,12 +34,15 @@ public class KryoStoreUtils {
 			//Log.d(TAG,start+": starting serializeToDisk with password");
 
 			Output output = new Output(new FileOutputStream(filename));
+			WaspDataPage dataPage = new WaspDataPage();
             if(cipherManager!=null) {
-                AESSerializer aes = new AESSerializer(getKryoInstance().getSerializer(obj.getClass()), cipherManager);
-                aes.write(getKryoInstance(), output, obj);
+                Cipher cipher = cipherManager.getEncCipher();
+				dataPage.setIv(cipher.getIV());
+				dataPage.setData(cipher.doFinal(serialize(obj)));
             } else {
-                getKryoInstance().writeObject(output, obj);
+				dataPage.setData(serialize(obj));
             }
+			getKryoInstance().writeObject(output, dataPage);
 			output.close();
 			
 			//Long end = System.currentTimeMillis();
@@ -58,12 +63,13 @@ public class KryoStoreUtils {
             Object hash;
 			if(f.exists()) {
 				Input input = new Input(new FileInputStream(f));
+				WaspDataPage dataPage = getKryoInstance().readObject(input, WaspDataPage.class);
                 if(cipherManager!=null) {
-                    AESSerializer aes = new AESSerializer(getKryoInstance().getDefaultSerializer(type), cipherManager);
-                    hash = aes.read(getKryoInstance(), input, type);
+                    Cipher decipher = cipherManager.getDecCipher(dataPage.getIv());
+					hash = unserialize(decipher.doFinal(dataPage.getData()),type);
                 }
                 else {
-                    hash = getKryoInstance().readObject(input, type);
+                   hash = unserialize(dataPage.getData(),type);
                 }
 				input.close();
 				
@@ -88,6 +94,11 @@ public class KryoStoreUtils {
 		Output output = new Output(ret);
 		getKryoInstance().writeObject(output, o);
 		return output.toBytes();
+	}
+
+	public static Object unserialize(byte[] buffer, Class type) {
+		Input input = new Input(buffer);
+		return getKryoInstance().readObject(input, type);
 	}
 	
 //	public static Object cloneObject(Object obj) {
