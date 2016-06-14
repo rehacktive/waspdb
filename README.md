@@ -27,7 +27,7 @@ Add the dependency
 ```groovy
 dependencies {
 	...
-	compile 'com.github.rehacktive:waspdb:1.0'
+	compile 'com.github.rehacktive:waspdb:1.1'
 }
 ```
 
