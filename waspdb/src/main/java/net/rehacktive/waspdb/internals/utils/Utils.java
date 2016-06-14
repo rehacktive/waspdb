@@ -1,6 +1,6 @@
 package net.rehacktive.waspdb.internals.utils;
 
-import net.rehacktive.waspdb.internals.cryptolayer.CipherManager;
+import net.rehacktive.waspdb.internals.collision.CipherManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -49,7 +49,7 @@ public class Utils {
 //			Security.addProvider(new BouncyCastleProvider());
 //            for(String s : Security.getAlgorithms("Cipher"))
 //                 System.out.println(s);
-            SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(CipherManager.algorithm);
+            SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(CipherManager.key_algorithm);
 			return true;
 		} catch (NoSuchAlgorithmException e) {
 			return false;

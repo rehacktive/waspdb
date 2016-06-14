@@ -2,7 +2,7 @@ package net.rehacktive.waspdb;
 
 import net.rehacktive.waspdb.internals.collision.CollisionHash;
 import net.rehacktive.waspdb.internals.collision.exceptions.KeyNotFoundException;
-import net.rehacktive.waspdb.internals.cryptolayer.CipherManager;
+import net.rehacktive.waspdb.internals.collision.CipherManager;
 
 import org.apache.commons.io.FileUtils;
 
@@ -29,13 +29,15 @@ public class WaspHash extends WaspObservable {
      * @param key the Object key
      * @param value the Object value
      */
-	public void put(Object key, Object value) {
+	public Boolean put(Object key, Object value) {
 		try {
 			hash.updateObject(key, value);
             notifyObservers();
+			return true;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 
