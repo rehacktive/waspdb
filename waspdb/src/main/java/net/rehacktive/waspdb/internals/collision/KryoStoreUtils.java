@@ -48,6 +48,7 @@ public class KryoStoreUtils {
 			//Log.d(TAG,"total time (ms): "+(end-start));
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			throw new Exception("\nERROR on serializeToDisk:"+e.getMessage());
 		}
 	}
@@ -82,13 +83,14 @@ public class KryoStoreUtils {
 			}
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			throw new Exception("\nERROR on readFromDisk:"+e.getMessage());
 		}
 	}
 
 	// serializer for keys
 	public static byte[] serialize(Object o) {
-		byte[] ret = new byte[4096];
+		byte[] ret = new byte[CollisionHash.MAXFILESIZE];
 		Output output = new Output(ret);
 		getKryoInstance().writeObject(output, o);
 		return output.toBytes();

@@ -61,7 +61,7 @@ public class MainTest extends InstrumentationTestCase {
         hash.flush();
 
         Long start = System.currentTimeMillis();
-        int count = 100;
+        int count = 300;
         for (int i = 0; i < count; i++) {
             UserWithNestedContent user = new UserWithNestedContent(i, "b" + i, "");
             hash.put(user.getUsername(), user);
