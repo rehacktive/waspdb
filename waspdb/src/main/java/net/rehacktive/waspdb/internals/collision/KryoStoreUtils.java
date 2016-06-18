@@ -90,7 +90,7 @@ public class KryoStoreUtils {
 
 	// serializer for keys
 	public static byte[] serialize(Object o) {
-		byte[] ret = new byte[CollisionHash.MAXFILESIZE];
+		byte[] ret = new byte[CollisionHash.MAXFILESIZE*2];
 		Output output = new Output(ret);
 		getKryoInstance().writeObject(output, o);
 		return output.toBytes();
