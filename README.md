@@ -120,12 +120,9 @@ This is not a SQL database. It does not have a relational data model, it does no
 
 ###Proguard 
 If you use Proguard in your project, add this to your proguard rules in order to skip WaspDB/Kryo classes:
-
-```-keep class net.rehacktive.waspdb.** { *; }
--keep class com.esotericsoftware.kryo.** { *; }
-```
-
-
+	
+	-keep class net.rehacktive.waspdb.** { *; }
+	-keep class com.esotericsoftware.kryo.** { *; }
 
 ###Performances
 
