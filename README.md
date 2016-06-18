@@ -118,6 +118,14 @@ This is not a SQL database. It does not have a relational data model, it does no
 ###Limitations
 - it's NOT transactional. So if you wanna store 10000, it will make 10000 actual write operations to disk in sequence. That means it will be slower (in this case) compared to transactional databases. (of course, if you store 100 items as a java List - so actually a single object - it will make a single(ish) write operation)
 
+###Proguard 
+If you use Proguard in your project, add this to your proguard rules in order to skip WaspDB/Kryo classes:
+
+```-keep class net.rehacktive.waspdb.** { *; }
+-keep class com.esotericsoftware.kryo.** { *; }
+```
+
+
 
 ###Performances
 

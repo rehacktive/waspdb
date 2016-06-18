@@ -4,8 +4,6 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
-import net.rehacktive.waspdb.internals.collision.exceptions.WaspDataPage;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
