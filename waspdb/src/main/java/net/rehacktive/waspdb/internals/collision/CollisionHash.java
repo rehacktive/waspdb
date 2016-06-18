@@ -22,7 +22,7 @@ public class CollisionHash {
     protected String path;
     protected String ext = ".cube";
 
-    protected int MAXFILESIZE = 65536;
+    protected static int MAXFILESIZE = 65536;
 
     private CipherManager cipherManager;
 
