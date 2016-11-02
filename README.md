@@ -2,6 +2,9 @@
 
 last release: 1.1.1
 
+(note: this version is NOT compatible with 1.0, read the release message)
+
+
 #WaspDb 
 WaspDB is a pure Java key/value (NoSQL) database library for Android. It supports AES256 encryption for all the disk storage. It's very small (the aar file is ~189 KB).
 
