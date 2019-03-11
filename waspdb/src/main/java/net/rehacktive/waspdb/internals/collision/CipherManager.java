@@ -33,15 +33,7 @@ public class CipherManager {
     protected static CipherManager instance = null;
 
     private CipherManager() {
-//        Security.insertProviderAt(new org.spongycastle.jce.provider.BouncyCastleProvider(), 1);
-//        Provider[] providers = Security.getProviders();
-//        for (Provider provider : providers) {
-//            Log.i("CRYPTO","provider: "+provider.getName());
-//            Set<Provider.Service> services = provider.getServices();
-//            for (Provider.Service service : services) {
-//                Log.i("CRYPTO","  key_algorithm: "+service.getAlgorithm());
-//            }
-//        }
+           // Empty constructor
     }
 
     public static CipherManager getInstance(char[] p, byte[] s)  {

@@ -20,14 +20,14 @@ android {
         exclude 'META-INF/LGPL2.1'
     }
 
-    compileSdkVersion 22
-    buildToolsVersion "21.1.2"
+    buildToolsVersion = project.ANDROID_BUILD_TOOLS_VERSION
+    compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
+        versionCode 2
+        versionName "1.0.1"
     }
 
     lintOptions {
@@ -51,8 +51,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.esotericsoftware:kryo:3.0.3'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.esotericsoftware:kryo:3.0.3'
 }
 
 

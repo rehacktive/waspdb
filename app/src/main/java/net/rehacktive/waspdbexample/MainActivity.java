@@ -1,7 +1,7 @@
 package net.rehacktive.waspdbexample;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,104 +17,110 @@ import net.rehacktive.waspdb.WaspObserver;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends ActionBarActivity {
+/**
+ * Edited by AndroidMarv
+ * Removed ActionBarActivity
+ * reason Deprecation
+ */
 
-    ProgressBar progressBar;
-    // wasp objects
-    WaspDb db;
-    WaspHash hash;
-    WaspObserver observer;
+public class MainActivity extends Activity {
 
-    UserAdapter adapter;
+	ProgressBar progressBar;
+	// wasp objects
+	WaspDb db;
+	WaspHash hash;
+	WaspObserver observer;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+	UserAdapter adapter;
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+	@Override
+	protected void onCreate (Bundle savedInstanceState) {
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
-        ListView userList = (ListView) findViewById(R.id.userlist);
-        adapter = new UserAdapter(this);
-        userList.setAdapter(adapter);
+		progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        if(db==null) {
-            progressBar.setVisibility(View.VISIBLE);
-            WaspFactory.openOrCreateDatabase(getFilesDir().getPath(), "example", "Passw0rd", new WaspListener<WaspDb>() {
-                @Override
-                public void onDone(WaspDb waspDb) {
-                    db = waspDb;
-                    hash = db.openOrCreateHash("users");
+		ListView userList = (ListView) findViewById(R.id.userlist);
+		adapter = new UserAdapter(this);
+		userList.setAdapter(adapter);
 
-                    progressBar.setVisibility(View.INVISIBLE);
+		if ( db == null ) {
+			progressBar.setVisibility(View.VISIBLE);
+			WaspFactory.openOrCreateDatabase(getFilesDir().getPath(), "example", "Passw0rd", new WaspListener<WaspDb>() {
+				@Override
+				public void onDone (WaspDb waspDb) {
+					db = waspDb;
+					hash = db.openOrCreateHash("users");
 
-                    getUsers();
+					progressBar.setVisibility(View.INVISIBLE);
 
-                    observer = new WaspObserver() {
-                        @Override
-                        public void onChange() {
-                            List<User> users = hash.getAllValues();
-                            adapter.setUsers(users);
-                            adapter.notifyDataSetChanged();
-                        }
-                    };
+					getUsers();
 
-                    hash.register(observer);
-                }
-            });
-        }
-    }
+					observer = new WaspObserver() {
+						@Override
+						public void onChange () {
+							List<User> users = hash.getAllValues();
+							adapter.setUsers(users);
+							adapter.notifyDataSetChanged();
+						}
+					};
 
-    private void getUsers() {
-        List<User> users = hash.getAllValues();
-        if(users==null)
-            users = new ArrayList<>();
+					hash.register(observer);
+				}
+			});
+		}
+	}
 
-        adapter.setUsers(users);
-        adapter.notifyDataSetChanged();
-    }
+	private void getUsers () {
+		List<User> users = hash.getAllValues();
+		if ( users == null )
+			users = new ArrayList<>();
 
-    private void addUser() {
-        User user = new User("user "+System.currentTimeMillis(), "");
-        hash.put(user.getUser_name(),user);
-    }
+		adapter.setUsers(users);
+		adapter.notifyDataSetChanged();
+	}
 
-    private void flushUsers() {
-        hash.flush();
-    }
+	private void addUser () {
+		User user = new User("user " + System.currentTimeMillis(), "");
+		hash.put(user.getUser_name(), user);
+	}
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        hash.unregister(observer);
-    }
+	private void flushUsers () {
+		hash.flush();
+	}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+	@Override
+	protected void onDestroy () {
+		super.onDestroy();
+		hash.unregister(observer);
+	}
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+	@Override
+	public boolean onCreateOptionsMenu (Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_main, menu);
+		return true;
+	}
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.add_user) {
-            addUser();
-            return true;
-        }
+	@Override
+	public boolean onOptionsItemSelected (MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
 
-        if (id == R.id.flush_user) {
-            flushUsers();
-            return true;
-        }
+		//noinspection SimplifiableIfStatement
+		if ( id == R.id.add_user ) {
+			addUser();
+			return true;
+		}
 
-        return super.onOptionsItemSelected(item);
-    }
+		if ( id == R.id.flush_user ) {
+			flushUsers();
+			return true;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
 }

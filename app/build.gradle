@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "21.1.2"
+
+    buildToolsVersion = project.ANDROID_BUILD_TOOLS_VERSION
+    compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
 
     defaultConfig {
         applicationId "net.rehacktive.waspdbexample"
         minSdkVersion 14
-        targetSdkVersion 22
+        targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
         versionCode 2
         versionName "1.1"
     }
@@ -18,14 +19,13 @@ android {
         }
     }
 
-
     lintOptions {
         abortOnError false
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.0.0'
-    compile project(':waspdb')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation project(':waspdb')
 }
